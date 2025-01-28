@@ -392,7 +392,7 @@ class TextToSpeech:
         text_tokens = torch.IntTensor(self.tokenizer.encode(text)).unsqueeze(0).to(self.device)
         text_tokens = F.pad(text_tokens, (0, 1))  # This may not be necessary.
         assert text_tokens.shape[-1] < 400, 'Too much text provided. Break the text up into separate segments and re-try inference.'
-        streamer = TextStreamer(self.tokenizer)
+        streamer = None
         auto_conds = None
         if voice_samples is not None:
             auto_conditioning, diffusion_conditioning, auto_conds, _ = self.get_conditioning_latents(voice_samples, return_mels=True)
